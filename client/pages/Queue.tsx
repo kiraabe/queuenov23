@@ -476,15 +476,14 @@ export default function Queue() {
     return (
       <div
         ref={containerRef}
-        className="fixed inset-0 w-full overflow-y-auto bg-gradient-to-b from-slate-950 to-slate-900 font-mono"
+        className="fixed inset-0 w-screen h-screen bg-gradient-to-b from-slate-950 to-slate-900 overflow-hidden flex flex-col font-mono"
       >
         {/* Top Border - LED Style */}
         <div className="h-2 bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400"></div>
 
         {/* Main Content */}
-        <PageContainer>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            {categories.map(([category, data]) => {
+        <div className="flex-1 overflow-hidden flex gap-1 p-4 lg:p-6">
+          {categories.map(([category, data], index) => {
               // Filter window-assigned tickets for this category
               const categoryWindowTickets = windowAssignedTickets.filter(
                 (item) => {
@@ -501,7 +500,7 @@ export default function Queue() {
               return (
                 <div
                   key={category}
-                  className="min-w-0 flex flex-col bg-slate-900 border-2 border-yellow-500 shadow-2xl rounded-lg overflow-hidden"
+                  className="flex-1 flex flex-col bg-slate-900 border-2 border-yellow-500 shadow-2xl rounded-lg overflow-hidden"
                 >
                   {/* Service Header - Large */}
                   <div className="bg-yellow-500 px-4 lg:px-6 py-3 lg:py-4">
@@ -511,15 +510,15 @@ export default function Queue() {
                   </div>
 
                   {/* Content Area */}
-                  <div className="flex-1 flex flex-col px-4 py-4 gap-4">
+                  <div className="flex-1 flex flex-col overflow-hidden px-4 lg:px-6 py-4 lg:py-6 gap-4">
                     {/* NOW SERVING Section */}
-                    <div className="flex flex-col gap-3 flex-1 min-w-0">
+                    <div className="flex flex-col gap-3 flex-1 overflow-hidden">
                       <p className="text-yellow-400 text-xs lg:text-sm font-black uppercase tracking-widest opacity-80">
                         Now Serving
                       </p>
 
                       {/* All Serving Tickets Grid - Auto Scrolling */}
-                      <div className="max-h-96 overflow-y-auto relative">
+                      <div className="flex-1 overflow-hidden relative">
                         {shouldAutoScroll && (
                           <style>{`
                           @keyframes autoScroll {
@@ -547,17 +546,17 @@ export default function Queue() {
                                 return (
                                   <div
                                     key={item.ticket.id}
-                                    className="bg-yellow-500/20 border-2 border-yellow-500 rounded-lg px-3 py-4"
+                                    className="bg-yellow-500/20 border-2 border-yellow-500 rounded-lg px-6 lg:px-8 py-4 lg:py-6"
                                   >
-                                    <div className="flex flex-wrap items-center justify-center gap-2">
-                                      <p className="font-display text-3xl lg:text-4xl font-black text-yellow-300 leading-none drop-shadow-lg break-all">
+                                    <div className="flex items-center justify-center gap-4 lg:gap-6">
+                                      <p className="font-display text-5xl lg:text-6xl font-black text-yellow-300 leading-none drop-shadow-lg">
                                         {item.ticket.code}
                                       </p>
-                                      <p className="text-yellow-400 text-2xl font-black">
+                                      <p className="text-yellow-400 text-3xl lg:text-4xl font-black">
                                         →
                                       </p>
-                                      <div className="bg-green-500/20 border-2 border-green-500 rounded px-3 py-2 flex-shrink-0">
-                                        <p className="font-display text-2xl lg:text-3xl font-black text-green-400">
+                                      <div className="bg-green-500/20 border-2 border-green-500 rounded px-4 lg:px-6 py-2 lg:py-3 flex-shrink-0">
+                                        <p className="font-display text-4xl lg:text-5xl font-black text-green-400">
                                           {windowNum}
                                         </p>
                                       </div>
@@ -578,17 +577,17 @@ export default function Queue() {
                                   return (
                                     <div
                                       key={`${item.ticket.id}-loop`}
-                                      className="bg-yellow-500/20 border-2 border-yellow-500 rounded-lg px-3 py-4"
+                                      className="bg-yellow-500/20 border-2 border-yellow-500 rounded-lg px-6 lg:px-8 py-4 lg:py-6"
                                     >
-                                      <div className="flex flex-wrap items-center justify-center gap-2">
-                                        <p className="font-display text-3xl lg:text-4xl font-black text-yellow-300 leading-none drop-shadow-lg break-all">
+                                      <div className="flex items-center justify-center gap-4 lg:gap-6">
+                                        <p className="font-display text-5xl lg:text-6xl font-black text-yellow-300 leading-none drop-shadow-lg">
                                           {item.ticket.code}
                                         </p>
-                                        <p className="text-yellow-400 text-2xl font-black">
+                                        <p className="text-yellow-400 text-3xl lg:text-4xl font-black">
                                           →
                                         </p>
-                                        <div className="bg-green-500/20 border-2 border-green-500 rounded px-3 py-2 flex-shrink-0">
-                                          <p className="font-display text-2xl lg:text-3xl font-black text-green-400">
+                                        <div className="bg-green-500/20 border-2 border-green-500 rounded px-4 lg:px-6 py-2 lg:py-3 flex-shrink-0">
+                                          <p className="font-display text-4xl lg:text-5xl font-black text-green-400">
                                             {windowNum}
                                           </p>
                                         </div>
@@ -623,8 +622,7 @@ export default function Queue() {
                 </div>
               );
             })}
-          </div>
-        </PageContainer>
+        </div>
 
         {/* Bottom Border - LED Style */}
         <div className="h-2 bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400"></div>
