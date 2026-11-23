@@ -686,12 +686,20 @@ export default function EmploymentManagement() {
             </Alert>
           ) : (
             <div className="space-y-6">
-              {editingUserId && (
-                <Card className="border-blue-200 bg-blue-50">
-                  <CardHeader>
-                    <CardTitle className="text-base">Edit Employee</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
+              <Dialog
+                open={!!editingUserId}
+                onOpenChange={(open) => {
+                  if (!open && !isLoading) setEditingUserId(null);
+                }}
+              >
+                <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
+                  <DialogHeader>
+                    <DialogTitle>Edit Employee</DialogTitle>
+                    <DialogDescription>
+                      Update the employee's details and save your changes.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4">
                     {paginatedUsers
                       .filter((user) => user.id === editingUserId)
                       .map((user) => (
@@ -886,14 +894,12 @@ export default function EmploymentManagement() {
                           </div>
                         </div>
                       ))}
-                  </CardContent>
-                </Card>
-              )}
+                  </div>
+                </DialogContent>
+              </Dialog>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {paginatedUsers
-                  .filter((user) => user.id !== editingUserId)
-                  .map((user) => (
+                {paginatedUsers.map((user) => (
                     <div key={user.id} className="rounded-lg border p-4">
                       <div className="flex items-start justify-between">
                         <div className="flex-1 space-y-2">
