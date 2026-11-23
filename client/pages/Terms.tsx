@@ -1,9 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 const Terms = () => {
   return (
-    <div className="container py-10 max-w-4xl mx-auto px-4">
-      <Card className="border-none shadow-none bg-transparent">
+    <PageContainer>
+      <Card className="mx-auto max-w-4xl border-none shadow-none bg-transparent">
         <CardHeader className="px-0 pt-0">
           <CardTitle className="text-3xl font-bold">Terms of Service</CardTitle>
           <p className="text-muted-foreground mt-2">Last updated: {new Date().toLocaleDateString()}</p>
@@ -51,7 +52,7 @@ const Terms = () => {
           </section>
         </CardContent>
       </Card>
-    </div>
+    </PageContainer>
   );
 };
 

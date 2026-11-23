@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
 import { homePathForUser } from "@/lib/role-home";
 import { KeyRound, Building2, Users, UserCheck, LogOut } from "lucide-react";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 const roleConfig = {
   admin: {
@@ -71,72 +72,74 @@ export default function RoleSelector() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 p-4">
-      <div className="mx-auto max-w-4xl">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight">
-            Welcome, {user.fullName || user.username}
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            You have access to {availableRoles.length} role
-            {availableRoles.length !== 1 ? "s" : ""}. Select one to continue.
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
+      <PageContainer>
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold tracking-tight">
+              Welcome, {user.fullName || user.username}
+            </h1>
+            <p className="text-muted-foreground mt-2">
+              You have access to {availableRoles.length} role
+              {availableRoles.length !== 1 ? "s" : ""}. Select one to continue.
+            </p>
+          </div>
 
-        <div className="grid gap-4 md:grid-cols-2 mb-8">
-          {availableRoles.map((role) => {
-            const config = roleConfig[role as keyof typeof roleConfig];
-            const Icon = config.icon;
-            const isActive = role === currentRole;
+          <div className="grid gap-4 md:grid-cols-2 mb-8">
+            {availableRoles.map((role) => {
+              const config = roleConfig[role as keyof typeof roleConfig];
+              const Icon = config.icon;
+              const isActive = role === currentRole;
 
-            return (
-              <Card
-                key={role}
-                className={`cursor-pointer transition-all hover:shadow-lg ${
-                  isActive
-                    ? "border-primary bg-primary/5"
-                    : "hover:border-primary/50"
-                }`}
-                onClick={() => handleRoleSelect(role)}
-              >
-                <CardHeader className="pb-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`p-2 rounded-lg ${isActive ? "bg-primary text-primary-foreground" : "bg-muted"}`}
-                      >
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <CardTitle className="text-base">
-                          {config.label}
-                        </CardTitle>
-                        {isActive && (
-                          <p className="text-xs text-primary font-semibold">
-                            Currently selected
-                          </p>
-                        )}
+              return (
+                <Card
+                  key={role}
+                  className={`cursor-pointer transition-all hover:shadow-lg ${
+                    isActive
+                      ? "border-primary bg-primary/5"
+                      : "hover:border-primary/50"
+                  }`}
+                  onClick={() => handleRoleSelect(role)}
+                >
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`p-2 rounded-lg ${isActive ? "bg-primary text-primary-foreground" : "bg-muted"}`}
+                        >
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-base">
+                            {config.label}
+                          </CardTitle>
+                          {isActive && (
+                            <p className="text-xs text-primary font-semibold">
+                              Currently selected
+                            </p>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
-                    {config.description}
-                  </p>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                      {config.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
 
-        <div className="flex gap-3">
-          <Button variant="outline" onClick={handleLogout} className="gap-2">
-            <LogOut className="h-4 w-4" />
-            Sign Out
-          </Button>
+          <div className="flex gap-3">
+            <Button variant="outline" onClick={handleLogout} className="gap-2">
+              <LogOut className="h-4 w-4" />
+              Sign Out
+            </Button>
+          </div>
         </div>
-      </div>
+      </PageContainer>
     </div>
   );
 }

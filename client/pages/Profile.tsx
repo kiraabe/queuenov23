@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useTranslation } from "@/hooks/use-translation";
 import { apiFetch } from "@/lib/api";
 import { ChangePasswordForm } from "@/components/ChangePasswordForm";
+import { PageContainer } from "@/components/layout/PageContainer";
 import {
   Card,
   CardContent,
@@ -78,247 +79,251 @@ function ProfileContent({ user: initialUser }: { user: NonNullable<ReturnType<ty
   return (
     <>
       <div className="min-h-screen bg-gradient-to-br from-primary/5 to-primary/10">
-        <div className="w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-border/40 bg-background/95">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => navigate(-1)}
-                className="h-10 w-10"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-              <h1 className="text-xl sm:text-2xl font-semibold">{t("buttons.myProfile")}</h1>
+        <div className="w-full border-b border-border/40 bg-background/95">
+          <PageContainer flush className="py-4 sm:py-6">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => navigate(-1)}
+                  className="h-10 w-10"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </Button>
+                <h1 className="text-xl sm:text-2xl font-semibold">{t("buttons.myProfile")}</h1>
+              </div>
             </div>
-          </div>
+          </PageContainer>
         </div>
 
-        <div className="w-full max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          {/* Profile Header Card */}
-          <Card className="mb-8 border-border/60 bg-card/90 shadow-lg">
-            <CardHeader className="space-y-4">
-              <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-                <Avatar className="h-16 w-16 sm:h-20 sm:w-20 flex-shrink-0">
-                  <AvatarFallback className="text-lg sm:text-xl font-bold">
-                    {initials}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1 min-w-0">
-                  <CardTitle className="text-2xl sm:text-3xl truncate">
-                    {user.fullName || user.username}
-                  </CardTitle>
-                  <CardDescription className="text-sm sm:text-base capitalize mt-2">
-                    {user.role === "employee" || user.role === "archiever"
-                      ? t("profile.title")
-                      : user.role === "teller"
-                        ? t("profile.roles.teller")
-                        : user.role === "reception"
-                          ? t("profile.roles.reception")
-                          : t("profile.roles.admin")}
-                  </CardDescription>
-                  {jobTitle && (
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {jobTitle.nameEnglish}
-                      {jobTitle.nameAmharic && ` / ${jobTitle.nameAmharic}`}
-                    </p>
-                  )}
+        <PageContainer>
+          <div className="w-full max-w-2xl mx-auto">
+            {/* Profile Header Card */}
+            <Card className="mb-8 border-border/60 bg-card/90 shadow-lg">
+              <CardHeader className="space-y-4">
+                <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+                  <Avatar className="h-16 w-16 sm:h-20 sm:w-20 flex-shrink-0">
+                    <AvatarFallback className="text-lg sm:text-xl font-bold">
+                      {initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <CardTitle className="text-2xl sm:text-3xl truncate">
+                      {user.fullName || user.username}
+                    </CardTitle>
+                    <CardDescription className="text-sm sm:text-base capitalize mt-2">
+                      {user.role === "employee" || user.role === "archiever"
+                        ? t("profile.title")
+                        : user.role === "teller"
+                          ? t("profile.roles.teller")
+                          : user.role === "reception"
+                            ? t("profile.roles.reception")
+                            : t("profile.roles.admin")}
+                    </CardDescription>
+                    {jobTitle && (
+                      <p className="text-sm text-muted-foreground mt-1">
+                        {jobTitle.nameEnglish}
+                        {jobTitle.nameAmharic && ` / ${jobTitle.nameAmharic}`}
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </CardHeader>
-          </Card>
+              </CardHeader>
+            </Card>
 
-          {/* Account Information */}
-          <Card className="border-border/60 bg-card/90 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-lg sm:text-xl">
-                {t("profile.accountInfo")}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {/* Full Name */}
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-muted-foreground">
-                    {t("profile.fullName")}
-                  </Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      readOnly
-                      value={user.fullName || t("profile.notProvided")}
-                      className="bg-muted/50 cursor-default"
-                    />
-                    {user.fullName && (
+            {/* Account Information */}
+            <Card className="border-border/60 bg-card/90 shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-lg sm:text-xl">
+                  {t("profile.accountInfo")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* Full Name */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      {t("profile.fullName")}
+                    </Label>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        readOnly
+                        value={user.fullName || t("profile.notProvided")}
+                        className="bg-muted/50 cursor-default"
+                      />
+                      {user.fullName && (
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() => copyToClipboard(user.fullName!, t("profile.fullName"))}
+                          className="h-10 w-10 flex-shrink-0"
+                        >
+                          {copiedField === "Full Name" ? (
+                            <Check className="h-4 w-4 text-green-600" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Username */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      {t("profile.username")}
+                    </Label>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        readOnly
+                        value={user.username}
+                        className="bg-muted/50 cursor-default"
+                      />
                       <Button
                         variant="outline"
                         size="icon"
-                        onClick={() => copyToClipboard(user.fullName!, t("profile.fullName"))}
+                        onClick={() => copyToClipboard(user.username, t("profile.username"))}
                         className="h-10 w-10 flex-shrink-0"
                       >
-                        {copiedField === "Full Name" ? (
+                        {copiedField === "Username" ? (
                           <Check className="h-4 w-4 text-green-600" />
                         ) : (
                           <Copy className="h-4 w-4" />
                         )}
                       </Button>
-                    )}
+                    </div>
                   </div>
-                </div>
 
-                {/* Username */}
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-muted-foreground">
-                    {t("profile.username")}
-                  </Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      readOnly
-                      value={user.username}
-                      className="bg-muted/50 cursor-default"
-                    />
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => copyToClipboard(user.username, t("profile.username"))}
-                      className="h-10 w-10 flex-shrink-0"
-                    >
-                      {copiedField === "Username" ? (
-                        <Check className="h-4 w-4 text-green-600" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Role */}
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-muted-foreground">
-                    {t("profile.role")}
-                  </Label>
-                  <Input
-                    readOnly
-                    value={t(`profile.roles.${user.role}`)}
-                    className="bg-muted/50 cursor-default"
-                  />
-                </div>
-
-                {/* Assigned Window (for tellers) or placeholder */}
-                {user.windowId ? (
+                  {/* Role */}
                   <div className="space-y-2">
                     <Label className="text-sm font-medium text-muted-foreground">
-                      {t("teller.window.selectJobTitle")}
+                      {t("profile.role")}
                     </Label>
                     <Input
                       readOnly
-                      value={`Window ${user.windowId}`}
+                      value={t(`profile.roles.${user.role}`)}
                       className="bg-muted/50 cursor-default"
                     />
                   </div>
-                ) : null}
-              </div>
 
-              {/* Available Roles - full width below grid */}
-              {user.roles && user.roles.length > 1 && (
-                <div className="space-y-2 mt-6">
-                  <Label className="text-sm font-medium text-muted-foreground">
-                    {t("buttons.language")}
-                  </Label>
-                  <div className="flex flex-wrap gap-2">
-                    {user.roles.map((role) => (
-                      <div
-                        key={role}
-                        className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium capitalize"
-                      >
-                        {role}
-                      </div>
-                    ))}
+                  {/* Assigned Window (for tellers) or placeholder */}
+                  {user.windowId ? (
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium text-muted-foreground">
+                        {t("teller.window.selectJobTitle")}
+                      </Label>
+                      <Input
+                        readOnly
+                        value={`Window ${user.windowId}`}
+                        className="bg-muted/50 cursor-default"
+                      />
+                    </div>
+                  ) : null}
+                </div>
+
+                {/* Available Roles - full width below grid */}
+                {user.roles && user.roles.length > 1 && (
+                  <div className="space-y-2 mt-6">
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      {t("buttons.language")}
+                    </Label>
+                    <div className="flex flex-wrap gap-2">
+                      {user.roles.map((role) => (
+                        <div
+                          key={role}
+                          className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium capitalize"
+                        >
+                          {role}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Contact & Job Information */}
+            <Card className="mt-8 border-border/60 bg-card/90 shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-lg sm:text-xl">
+                  {t("profile.contactJobInfo")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* Phone */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      {t("profile.phone")}
+                    </Label>
+                    <Input
+                      readOnly
+                      value={user.phone || t("profile.notProvided")}
+                      className="bg-muted/50 cursor-default"
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      {t("profile.email")}
+                    </Label>
+                    <Input
+                      readOnly
+                      value={user.email || t("profile.notProvided")}
+                      className="bg-muted/50 cursor-default"
+                    />
+                  </div>
+
+                  {/* Department */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      {t("profile.department")}
+                    </Label>
+                    <Input
+                      readOnly
+                      value={user.department || t("profile.notProvided")}
+                      className="bg-muted/50 cursor-default"
+                    />
+                  </div>
+
+                  {/* Job Title */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      {t("profile.jobTitleLabel")}
+                    </Label>
+                    <Input
+                      readOnly
+                      value={jobTitle?.nameEnglish || jobTitle?.nameAmharic || t("profile.notProvided")}
+                      className="bg-muted/50 cursor-default"
+                    />
                   </div>
                 </div>
-              )}
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
-          {/* Contact & Job Information */}
-          <Card className="mt-8 border-border/60 bg-card/90 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-lg sm:text-xl">
-                {t("profile.contactJobInfo")}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {/* Phone */}
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-muted-foreground">
-                    {t("profile.phone")}
-                  </Label>
-                  <Input
-                    readOnly
-                    value={user.phone || t("profile.notProvided")}
-                    className="bg-muted/50 cursor-default"
-                  />
+            {/* Change Password Form */}
+            <ChangePasswordForm />
+
+            {/* Additional Info */}
+            <Card className="mt-8 border-border/60 bg-card/90 shadow-lg border-dashed">
+              <CardHeader>
+                <CardTitle className="text-lg">{t("profile.information")}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p>
+                    {t("profile.updateInfoDesc")}
+                  </p>
+                  <p>
+                    {t("profile.autoSync")}
+                  </p>
                 </div>
-
-                {/* Email */}
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-muted-foreground">
-                    {t("profile.email")}
-                  </Label>
-                  <Input
-                    readOnly
-                    value={user.email || t("profile.notProvided")}
-                    className="bg-muted/50 cursor-default"
-                  />
-                </div>
-
-                {/* Department */}
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-muted-foreground">
-                    {t("profile.department")}
-                  </Label>
-                  <Input
-                    readOnly
-                    value={user.department || t("profile.notProvided")}
-                    className="bg-muted/50 cursor-default"
-                  />
-                </div>
-
-                {/* Job Title */}
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-muted-foreground">
-                    {t("profile.jobTitleLabel")}
-                  </Label>
-                  <Input
-                    readOnly
-                    value={jobTitle?.nameEnglish || jobTitle?.nameAmharic || t("profile.notProvided")}
-                    className="bg-muted/50 cursor-default"
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Change Password Form */}
-          <ChangePasswordForm />
-
-          {/* Additional Info */}
-          <Card className="mt-8 border-border/60 bg-card/90 shadow-lg border-dashed">
-            <CardHeader>
-              <CardTitle className="text-lg">{t("profile.information")}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3 text-sm text-muted-foreground">
-                <p>
-                  {t("profile.updateInfoDesc")}
-                </p>
-                <p>
-                  {t("profile.autoSync")}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+              </CardContent>
+            </Card>
+          </div>
+        </PageContainer>
       </div>
     </>
   );
@@ -329,10 +334,12 @@ export default function Profile() {
 
   if (!user) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <p className="text-muted-foreground mb-4">Loading...</p>
-        </div>
+      <div className="flex items-center min-h-screen">
+        <PageContainer>
+          <div className="text-center">
+            <p className="text-muted-foreground mb-4">Loading...</p>
+          </div>
+        </PageContainer>
       </div>
     );
   }

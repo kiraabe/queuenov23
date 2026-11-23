@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { useSSE } from "@/hooks/use-sse";
 import { TrackHeader } from "@/components/track/TrackHeader";
+import { PageContainer } from "@/components/layout/PageContainer";
 import type { PublicTicket, TicketStatusResponse } from "@shared/api";
 
 async function fetchStatus(code: string): Promise<TicketStatusResponse> {
@@ -76,78 +77,80 @@ export default function TicketStatus() {
     }
   });
 
-  if (!code) return <div className="container py-10">Missing ticket code.</div>;
+  if (!code) return <PageContainer>Missing ticket code.</PageContainer>;
 
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-slate-50 to-sky-50/60">
       <TrackHeader />
 
-      <main className="flex flex-1 justify-center px-4 pb-12 pt-8">
-        <section className="w-full max-w-xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-          <div className="flex items-center justify-between gap-3">
-            <h1 className="text-xl font-semibold tracking-tight text-slate-900">
-              Your Ticket
-            </h1>
-            {ticket && (
-              <Badge variant="secondary" className="uppercase">
-                {ticket.status}
-              </Badge>
-            )}
-          </div>
-
-          <div className="mt-6 space-y-3">
-            <div className="rounded-xl border border-blue-200 bg-blue-50/70 px-5 py-4">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">
-                Ticket number
-              </p>
-              <p className="mt-1 font-display text-3xl font-semibold text-slate-900">
-                {code}
-              </p>
+      <main className="flex-1">
+        <PageContainer>
+          <section className="mx-auto w-full max-w-xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div className="flex items-center justify-between gap-3">
+              <h1 className="text-xl font-semibold tracking-tight text-slate-900">
+                Your Ticket
+              </h1>
+              {ticket && (
+                <Badge variant="secondary" className="uppercase">
+                  {ticket.status}
+                </Badge>
+              )}
             </div>
 
-            <div className={detailTileClass}>
-              <p className={detailLabelClass}>Status</p>
-              <p className={detailValueClass}>{ticket?.status ?? "—"}</p>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className={detailTileClass}>
-                <p className={detailLabelClass}>Service</p>
-                <p className={detailValueClass}>{ticket?.service ?? "—"}</p>
-              </div>
-              <div className={detailTileClass}>
-                <p className={detailLabelClass}>Window</p>
-                <p className={detailValueClass}>
-                  {ticket?.windowId ? `Window ${ticket.windowId}` : "—"}
+            <div className="mt-6 space-y-3">
+              <div className="rounded-xl border border-blue-200 bg-blue-50/70 px-5 py-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">
+                  Ticket number
+                </p>
+                <p className="mt-1 font-display text-3xl font-semibold text-slate-900">
+                  {code}
                 </p>
               </div>
-            </div>
 
-            <div className="grid gap-3 sm:grid-cols-3">
               <div className={detailTileClass}>
-                <p className={detailLabelClass}>Position</p>
-                <p className={detailValueClass}>{position ?? "—"}</p>
+                <p className={detailLabelClass}>Status</p>
+                <p className={detailValueClass}>{ticket?.status ?? "—"}</p>
               </div>
-              <div className={detailTileClass}>
-                <p className={detailLabelClass}>Est. wait</p>
-                <p className={detailValueClass}>
-                  {estSeconds == null
-                    ? "—"
-                    : `${Math.max(0, Math.round(estSeconds / 60))} min`}
-                </p>
-              </div>
-              <div className={detailTileClass}>
-                <p className={detailLabelClass}>Created</p>
-                <p className={detailValueClass}>
-                  {ticket
-                    ? new Date(ticket.createdAt).toLocaleTimeString()
-                    : "—"}
-                </p>
-              </div>
-            </div>
 
-          </div>
-        </section>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className={detailTileClass}>
+                  <p className={detailLabelClass}>Service</p>
+                  <p className={detailValueClass}>{ticket?.service ?? "—"}</p>
+                </div>
+                <div className={detailTileClass}>
+                  <p className={detailLabelClass}>Window</p>
+                  <p className={detailValueClass}>
+                    {ticket?.windowId ? `Window ${ticket.windowId}` : "—"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                <div className={detailTileClass}>
+                  <p className={detailLabelClass}>Position</p>
+                  <p className={detailValueClass}>{position ?? "—"}</p>
+                </div>
+                <div className={detailTileClass}>
+                  <p className={detailLabelClass}>Est. wait</p>
+                  <p className={detailValueClass}>
+                    {estSeconds == null
+                      ? "—"
+                      : `${Math.max(0, Math.round(estSeconds / 60))} min`}
+                  </p>
+                </div>
+                <div className={detailTileClass}>
+                  <p className={detailLabelClass}>Created</p>
+                  <p className={detailValueClass}>
+                    {ticket
+                      ? new Date(ticket.createdAt).toLocaleTimeString()
+                      : "—"}
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </section>
+        </PageContainer>
       </main>
     </div>
   );

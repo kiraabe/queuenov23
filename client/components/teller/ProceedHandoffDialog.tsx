@@ -80,13 +80,13 @@ export function ProceedHandoffDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-2xl">
+      <DialogContent className="max-h-full overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Proceed Ticket Handoff</DialogTitle>
           <DialogDescription>{descriptionText}</DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4 py-4 max-h-[60vh] overflow-y-auto">
+        <div className="space-y-4 py-4 max-h-[30rem] overflow-y-auto">
           {/* Ticket Summary */}
           <div className="rounded-lg border border-border bg-muted/40 p-4">
             <div className="flex items-end justify-between gap-4 mb-2">

@@ -12,6 +12,10 @@
    * A different format will require also updating the theme in tailwind.config.ts.
   */
   :root {
+    --stc-max: 1200px;
+    --stc-gutter: 24px;
+    --stc-section-y: 80px;
+    --stc-page-y: 48px;
     --font-sans: "Inter", "Noto Sans Ethiopic", system-ui, -apple-system, "Segoe UI", sans-serif;
     --font-display: "Inter", "Noto Sans Ethiopic", system-ui, -apple-system, "Segoe UI", sans-serif;
 
@@ -53,6 +57,14 @@
     --sidebar-accent-foreground: 214 85% 40%;
     --sidebar-border: 217 47% 93%;
     --sidebar-ring: 214 95% 53%;
+  }
+
+  @media (max-width: 480px) {
+    :root {
+      --stc-gutter: 16px;
+      --stc-section-y: 56px;
+      --stc-page-y: 32px;
+    }
   }
 
   .dark {

@@ -191,7 +191,7 @@ export default function Admin({ section }: AdminProps) {
   return (
     <TooltipProvider>
       <div className="flex flex-col min-h-screen">
-        <PageContainer className="flex-1 py-8 md:py-12">
+        <PageContainer className="flex-1">
           <div className="space-y-6">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-start gap-3">

@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { useLicense } from "@/hooks/use-license";
 import { getLicenseErrorMessage } from "@/lib/license-errors";
 import { LicenseLockedScreen } from "./LicenseLockedScreen";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 interface LicenseProviderProps {
   children: ReactNode;
@@ -49,11 +50,13 @@ export function LicenseProvider({ children }: LicenseProviderProps) {
   // Show loading screen
   if (licenseState.isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
-        <div className="text-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-white/30 border-t-white mx-auto mb-4" />
-          <p className="text-white">{licenseState.message}</p>
-        </div>
+      <div className="flex items-center min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+        <PageContainer>
+          <div className="text-center">
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-white/30 border-t-white mx-auto mb-4" />
+            <p className="text-white">{licenseState.message}</p>
+          </div>
+        </PageContainer>
       </div>
     );
   }

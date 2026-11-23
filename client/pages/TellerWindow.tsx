@@ -782,7 +782,7 @@ export default function TellerWindow() {
     .filter(Boolean) as string[];
 
   return (
-    <PageContainer className="space-y-6 py-8 md:py-12">
+    <PageContainer className="space-y-6">
       <div>
         <h1 className="mb-2 font-display text-2xl font-semibold">
           {tellerFullName

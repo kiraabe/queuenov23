@@ -8,6 +8,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { useTranslation } from "@/hooks/use-translation";
 import { homePathForUser } from "@/lib/role-home";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -138,7 +139,7 @@ export default function Login() {
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
-    <div className="container py-16">
+    <PageContainer>
       <div className="mx-auto max-w-md">
         <Card className="border-border/60 bg-card/80">
           <CardHeader>
@@ -221,6 +222,6 @@ export default function Login() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </PageContainer>
   );
 }

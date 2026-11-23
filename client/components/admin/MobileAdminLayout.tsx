@@ -54,7 +54,7 @@ export default function MobileAdminLayout({
         className="flex-1 overflow-y-auto md:pb-0"
         style={{ paddingBottom: "calc(5rem + env(safe-area-inset-bottom))" }}
       >
-        <PageContainer className="py-8 md:py-12">{children}</PageContainer>
+        <PageContainer>{children}</PageContainer>
       </main>
 
       {/* Mobile Bottom Navigation */}

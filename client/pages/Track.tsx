@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { TrackFooter } from "@/components/track/TrackFooter";
 import { TrackHeader } from "@/components/track/TrackHeader";
 import { TrackTrustRow } from "@/components/track/TrackTrustRow";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 async function fetchStatus(code: string): Promise<TicketStatusResponse> {
   const res = await fetch(`/api/tickets/${encodeURIComponent(code)}`);
@@ -256,185 +257,187 @@ export default function Track() {
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900">
       <TrackHeader />
-      <main className="flex flex-1 justify-center px-4 py-10 sm:py-14">
-      <div className="mx-auto w-full max-w-xl">
-        {state.stage === "input" ? (
-          <>
-            <div className="text-center">
-              <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                Track Your <span className="text-primary">Ticket</span>
-              </h1>
-              <p className="mt-2 text-sm text-slate-600 sm:text-base">
-                Enter your ticket number to check your queue status in real time
-              </p>
-            </div>
-            <Card className="mt-8 rounded-xl border-border/70 bg-white shadow-sm">
-              <CardContent className="p-6 sm:p-8">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label htmlFor="ticket-code" className="flex items-center gap-2 text-sm font-semibold text-slate-900">
-                    <TicketIcon className="h-4 w-4 text-primary" aria-hidden="true" />
-                    Ticket Number
-                  </label>
-                  <input
-                    id="ticket-code"
-                    type="text"
-                    placeholder="Enter ticket number (e.g., S1-015 or 015)"
-                    value={input}
-                    onChange={(e) => handleInputChange(e.target.value)}
-                    className="w-full rounded-lg border border-input bg-background px-4 py-3 text-lg font-semibold placeholder-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                    autoCapitalize="characters"
-                    autoComplete="off"
-                    autoFocus
-                  />
-                  <p className="text-xs text-slate-500">
-                    You can enter the full format (S1-015) or just the number
-                    (015)
+      <main className="flex-1">
+        <PageContainer>
+          <div className="mx-auto w-full max-w-xl">
+            {state.stage === "input" ? (
+              <>
+                <div className="text-center">
+                  <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                    Track Your <span className="text-primary">Ticket</span>
+                  </h1>
+                  <p className="mt-2 text-sm text-slate-600 sm:text-base">
+                    Enter your ticket number to check your queue status in real time
                   </p>
                 </div>
-              </div>
-              </CardContent>
-            </Card>
-            <TrackTrustRow />
-          </>
-        ) : state.stage === "loading" ? (
-          <Card className="rounded-xl border-border/70 bg-white shadow-sm">
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary/30 border-t-primary" />
-              <p className="mt-4 text-muted-foreground">
-                Looking up your ticket...
-              </p>
-            </CardContent>
-          </Card>
-        ) : state.stage === "error" ? (
-          <Card className="rounded-xl border-border/70 bg-white shadow-sm">
-            <CardHeader className="space-y-3">
-              <div className="flex items-center gap-3">
-                <AlertCircle className="h-6 w-6 text-red-600" />
-                <CardTitle className="text-red-600">Error</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="rounded-lg border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-700">
-                {state.error}
-              </div>
-              <Button
-                onClick={handleReset}
-                variant="outline"
-                className="w-full"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Try Again
-              </Button>
-            </CardContent>
-          </Card>
-        ) : state.ticket ? (
-          <Card className="rounded-xl border-border/70 bg-white shadow-sm">
-            <CardHeader className="space-y-3">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-2xl">Your Ticket</CardTitle>
-                <Badge
-                  className={cn(
-                    "flex items-center gap-1 text-xs uppercase",
-                    getStatusColor(state.ticket.status),
+                <Card className="mt-8 rounded-xl border-border/70 bg-white shadow-sm">
+                  <CardContent className="p-6 sm:p-8">
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <label htmlFor="ticket-code" className="flex items-center gap-2 text-sm font-semibold text-slate-900">
+                        <TicketIcon className="h-4 w-4 text-primary" aria-hidden="true" />
+                        Ticket Number
+                      </label>
+                      <input
+                        id="ticket-code"
+                        type="text"
+                        placeholder="Enter ticket number (e.g., S1-015 or 015)"
+                        value={input}
+                        onChange={(e) => handleInputChange(e.target.value)}
+                        className="w-full rounded-lg border border-input bg-background px-4 py-3 text-lg font-semibold placeholder-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                        autoCapitalize="characters"
+                        autoComplete="off"
+                        autoFocus
+                      />
+                      <p className="text-xs text-slate-500">
+                        You can enter the full format (S1-015) or just the number
+                        (015)
+                      </p>
+                    </div>
+                  </div>
+                  </CardContent>
+                </Card>
+                <TrackTrustRow />
+              </>
+            ) : state.stage === "loading" ? (
+              <Card className="rounded-xl border-border/70 bg-white shadow-sm">
+                <CardContent className="flex flex-col items-center justify-center py-12">
+                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary/30 border-t-primary" />
+                  <p className="mt-4 text-muted-foreground">
+                    Looking up your ticket...
+                  </p>
+                </CardContent>
+              </Card>
+            ) : state.stage === "error" ? (
+              <Card className="rounded-xl border-border/70 bg-white shadow-sm">
+                <CardHeader className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <AlertCircle className="h-6 w-6 text-red-600" />
+                    <CardTitle className="text-red-600">Error</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="rounded-lg border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-700">
+                    {state.error}
+                  </div>
+                  <Button
+                    onClick={handleReset}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    Try Again
+                  </Button>
+                </CardContent>
+              </Card>
+            ) : state.ticket ? (
+              <Card className="rounded-xl border-border/70 bg-white shadow-sm">
+                <CardHeader className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-2xl">Your Ticket</CardTitle>
+                    <Badge
+                      className={cn(
+                        "flex items-center gap-1 text-xs uppercase",
+                        getStatusColor(state.ticket.status),
+                      )}
+                    >
+                      {getStatusIcon(state.ticket.status)}
+                      {state.ticket.status}
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="rounded-lg border border-primary/40 bg-primary/10 p-6">
+                    <p className="text-xs uppercase tracking-widest text-primary">
+                      Ticket Number
+                    </p>
+                    <p
+                      className={cn(
+                        "mt-2 font-display text-4xl font-bold",
+                        state.ticket.status === "serving" ? "animate-blink" : "",
+                      )}
+                    >
+                      {state.ticket.code}
+                    </p>
+                  </div>
+
+                  <div
+                    className={cn(
+                      "rounded-lg border p-6",
+                      getStatusColor(state.ticket.status),
+                    )}
+                  >
+                    <p className="text-xs uppercase tracking-widest font-semibold">
+                      Status
+                    </p>
+                    <p className="mt-2 text-xl font-semibold">
+                      {getStatusMessage(state.ticket)}
+                    </p>
+                  </div>
+
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-lg border border-border/60 bg-background/70 p-4">
+                      <p className="text-xs uppercase text-muted-foreground">
+                        Service
+                      </p>
+                      <p className="mt-2 font-display text-xl font-semibold">
+                        {state.ticket.service}
+                      </p>
+                    </div>
+                    <div className="rounded-lg border border-border/60 bg-background/70 p-4">
+                      <p className="text-xs uppercase text-muted-foreground">
+                        Created
+                      </p>
+                      <p className="mt-2 font-display text-sm font-semibold">
+                        {new Date(state.ticket.createdAt).toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+
+                  {state.position !== null && (
+                    <div className="rounded-lg border border-border/60 bg-background/70 p-4">
+                      <p className="text-xs uppercase text-muted-foreground">
+                        Position in Queue
+                      </p>
+                      <p className="mt-2 font-display text-2xl font-semibold">
+                        #{state.position}
+                      </p>
+                    </div>
                   )}
-                >
-                  {getStatusIcon(state.ticket.status)}
-                  {state.ticket.status}
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="rounded-lg border border-primary/40 bg-primary/10 p-6">
-                <p className="text-xs uppercase tracking-widest text-primary">
-                  Ticket Number
-                </p>
-                <p
-                  className={cn(
-                    "mt-2 font-display text-4xl font-bold",
-                    state.ticket.status === "serving" ? "animate-blink" : "",
+
+                  {state.estSeconds !== null && state.position !== null && (
+                    <div className="rounded-lg border border-border/60 bg-background/70 p-4">
+                      <p className="text-xs uppercase text-muted-foreground">
+                        Estimated Wait Time
+                      </p>
+                      <p className="mt-2 font-display text-2xl font-semibold">
+                        {Math.max(0, Math.round(state.estSeconds / 60))} minute
+                        {Math.max(0, Math.round(state.estSeconds / 60)) !== 1
+                          ? "s"
+                          : ""}
+                      </p>
+                    </div>
                   )}
-                >
-                  {state.ticket.code}
-                </p>
-              </div>
-
-              <div
-                className={cn(
-                  "rounded-lg border p-6",
-                  getStatusColor(state.ticket.status),
-                )}
-              >
-                <p className="text-xs uppercase tracking-widest font-semibold">
-                  Status
-                </p>
-                <p className="mt-2 text-xl font-semibold">
-                  {getStatusMessage(state.ticket)}
-                </p>
-              </div>
 
 
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded-lg border border-border/60 bg-background/70 p-4">
-                  <p className="text-xs uppercase text-muted-foreground">
-                    Service
-                  </p>
-                  <p className="mt-2 font-display text-xl font-semibold">
-                    {state.ticket.service}
-                  </p>
-                </div>
-                <div className="rounded-lg border border-border/60 bg-background/70 p-4">
-                  <p className="text-xs uppercase text-muted-foreground">
-                    Created
-                  </p>
-                  <p className="mt-2 font-display text-sm font-semibold">
-                    {new Date(state.ticket.createdAt).toLocaleString()}
-                  </p>
-                </div>
-              </div>
+                  <div className="rounded-lg border border-primary/40 bg-primary/10 p-4 text-sm text-primary">
+                    <p>Updates appear automatically as the queue progresses.</p>
+                  </div>
 
-              {state.position !== null && (
-                <div className="rounded-lg border border-border/60 bg-background/70 p-4">
-                  <p className="text-xs uppercase text-muted-foreground">
-                    Position in Queue
-                  </p>
-                  <p className="mt-2 font-display text-2xl font-semibold">
-                    #{state.position}
-                  </p>
-                </div>
-              )}
-
-              {state.estSeconds !== null && state.position !== null && (
-                <div className="rounded-lg border border-border/60 bg-background/70 p-4">
-                  <p className="text-xs uppercase text-muted-foreground">
-                    Estimated Wait Time
-                  </p>
-                  <p className="mt-2 font-display text-2xl font-semibold">
-                    {Math.max(0, Math.round(state.estSeconds / 60))} minute
-                    {Math.max(0, Math.round(state.estSeconds / 60)) !== 1
-                      ? "s"
-                      : ""}
-                  </p>
-                </div>
-              )}
-
-
-              <div className="rounded-lg border border-primary/40 bg-primary/10 p-4 text-sm text-primary">
-                <p>Updates appear automatically as the queue progresses.</p>
-              </div>
-
-              <Button
-                onClick={handleReset}
-                variant="outline"
-                className="w-full"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Track Another Ticket
-              </Button>
-            </CardContent>
-          </Card>
-        ) : null}
-      </div>
+                  <Button
+                    onClick={handleReset}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    Track Another Ticket
+                  </Button>
+                </CardContent>
+              </Card>
+            ) : null}
+          </div>
+        </PageContainer>
       </main>
       <TrackFooter />
     </div>

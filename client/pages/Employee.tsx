@@ -934,7 +934,7 @@ export default function Employee() {
   }, [tickets, tab, historyQuery.data]);
 
   return (
-    <PageContainer className="py-8 md:py-12">
+    <PageContainer>
       <div className="space-y-6">
         <div className="flex items-start justify-between">
           <div className="space-y-2">

@@ -13,8 +13,8 @@ export function PageContainer({
   return (
     <div
       className={cn(
-        "mx-auto w-full max-w-[var(--page-container-max-width,1400px)] px-[var(--page-container-gutter,1rem)] sm:px-[var(--page-container-gutter,1.5rem)] lg:px-[var(--page-container-gutter,2rem)]",
-        !flush && "py-8 md:py-12",
+        "box-border mx-auto w-full max-w-[var(--stc-max)] px-[var(--stc-gutter)]",
+        !flush && "py-[var(--stc-page-y)]",
         className,
       )}
     >

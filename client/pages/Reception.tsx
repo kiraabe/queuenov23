@@ -538,7 +538,6 @@ export default function Reception() {
     <ConsoleShell
       title={t("reception.title")}
       className="lg:grid-cols-1"
-      sharedLayout
     >
       <section className="grid gap-6">
         <Card className="w-full rounded-xl border-border/70 bg-white shadow-sm">
