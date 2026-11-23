@@ -13,8 +13,6 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   AlertCircle,
   Edit2,
-  X,
-  Check,
   Users,
   Key,
   Copy,
@@ -26,6 +24,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -559,40 +558,7 @@ export default function WindowManagement() {
                 key={window.id}
                 className="flex items-center gap-2 rounded-lg border p-3"
               >
-                {editingWindowId === window.id ? (
-                  <>
-                    <div className="flex-1 space-y-1">
-                      <p className="text-xs font-medium text-muted-foreground">
-                        Window {window.id}
-                      </p>
-                      <Input
-                        value={editingWindowName}
-                        onChange={(e) => setEditingWindowName(e.target.value)}
-                        placeholder="Window name"
-                        className="h-8"
-                      />
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => handleSaveWindow(window.id)}
-                      disabled={isSaving}
-                      className="h-8 w-8 p-0"
-                    >
-                      <Check className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => setEditingWindowId(null)}
-                      disabled={isSaving}
-                      className="h-8 w-8 p-0"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </>
-                ) : (
-                  <>
+                <>
                     <div className="flex-1">
                       <p className="font-medium text-sm">{window.name}</p>
                       <div className="mt-2 space-y-2">
@@ -694,8 +660,7 @@ export default function WindowManagement() {
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
-                  </>
-                )}
+                </>
               </div>
             ))}
           </div>
@@ -714,6 +679,48 @@ export default function WindowManagement() {
           />
         )}
       </CardContent>
+
+      <Dialog
+        open={editingWindowId !== null}
+        onOpenChange={(open) => {
+          if (!open && !isSaving) setEditingWindowId(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Edit Window</DialogTitle>
+            <DialogDescription>Update the window name.</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-1">
+            <p className="text-xs font-medium text-muted-foreground">
+              Window {editingWindowId}
+            </p>
+            <Input
+              value={editingWindowName}
+              onChange={(e) => setEditingWindowName(e.target.value)}
+              placeholder="Window name"
+              disabled={isSaving}
+            />
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setEditingWindowId(null)}
+              disabled={isSaving}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() =>
+                editingWindowId !== null && handleSaveWindow(editingWindowId)
+              }
+              disabled={isSaving}
+            >
+              {isSaving ? "Saving..." : "Save"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <AlertDialog
         open={resetPasswordConfirmOpen}

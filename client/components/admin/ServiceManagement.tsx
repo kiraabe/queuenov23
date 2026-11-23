@@ -11,12 +11,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   AlertCircle,
   Trash2,
   Plus,
   Edit2,
   X,
-  Check,
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
@@ -546,72 +553,7 @@ export default function ServiceManagement() {
                     className="rounded-lg border p-4 space-y-3"
                   >
                     {/* Category Header */}
-                    {editingCategoryIdMode === category.id ? (
-                      <div className="space-y-3">
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                          <div className="space-y-2">
-                            <Label
-                              htmlFor={`edit-code-${category.id}`}
-                              className="text-xs"
-                            >
-                              Category Code
-                            </Label>
-                            <Input
-                              id={`edit-code-${category.id}`}
-                              value={editingCategoryCode}
-                              onChange={(e) =>
-                                setEditingCategoryCode(e.target.value)
-                              }
-                              className="h-8 text-sm"
-                              disabled={isLoading}
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label
-                              htmlFor={`edit-name-${category.id}`}
-                              className="text-xs"
-                            >
-                              Category Name
-                            </Label>
-                            <Input
-                              id={`edit-name-${category.id}`}
-                              value={editingCategoryName}
-                              onChange={(e) =>
-                                setEditingCategoryName(e.target.value)
-                              }
-                              className="h-8 text-sm"
-                              disabled={isLoading}
-                            />
-                          </div>
-                        </div>
-                        <div className="flex gap-2">
-                          <Button
-                            size="sm"
-                            onClick={() => handleEditCategory(category.id)}
-                            disabled={isLoading}
-                            className="h-8 text-xs gap-1"
-                          >
-                            <Check className="h-3 w-3" />
-                            Save
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => {
-                              setEditingCategoryIdMode(null);
-                              setEditingCategoryCode("");
-                              setEditingCategoryName("");
-                            }}
-                            disabled={isLoading}
-                            className="h-8 text-xs gap-1"
-                          >
-                            <X className="h-3 w-3" />
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between">
                         <div
                           className="flex-1 cursor-pointer flex items-center gap-2"
                           onClick={() =>
@@ -656,8 +598,7 @@ export default function ServiceManagement() {
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
-                      </div>
-                    )}
+                    </div>
 
                     {/* Services List */}
                     {isExpanded && (
@@ -670,88 +611,6 @@ export default function ServiceManagement() {
                           <div className="space-y-2">
                             {categoryServices.map((service) => (
                               <div key={service.id}>
-                                {editingServiceId === service.id ? (
-                                  <div className="rounded bg-muted/50 p-3 space-y-2">
-                                    <div className="space-y-2">
-                                      <Label className="text-xs">
-                                        Service Code
-                                      </Label>
-                                      <Input
-                                        value={editingServiceCode}
-                                        onChange={(e) =>
-                                          setEditingServiceCode(e.target.value)
-                                        }
-                                        className="h-8 text-sm"
-                                        disabled={isLoading}
-                                      />
-                                    </div>
-                                    <div className="space-y-2">
-                                      <Label className="text-xs">
-                                        Service Name
-                                      </Label>
-                                      <Input
-                                        value={editingServiceName}
-                                        onChange={(e) =>
-                                          setEditingServiceName(e.target.value)
-                                        }
-                                        className="h-8 text-sm"
-                                        disabled={isLoading}
-                                      />
-                                    </div>
-                                    <div className="space-y-2">
-                                      <Label className="text-xs">
-                                        Standard Time (minutes)
-                                      </Label>
-                                      <Input
-                                        type="number"
-                                        min="0"
-                                        placeholder="e.g., 30 for 30 minutes"
-                                        value={editingServiceStandardTime}
-                                        onChange={(e) =>
-                                          setEditingServiceStandardTime(
-                                            e.target.value,
-                                          )
-                                        }
-                                        className="h-8 text-sm"
-                                        disabled={isLoading}
-                                      />
-                                      {editingServiceStandardTime && (
-                                        <p className="text-xs text-muted-foreground">
-                                          {formatMinutes(
-                                            parseInt(editingServiceStandardTime, 10),
-                                          )}
-                                        </p>
-                                      )}
-                                    </div>
-                                    <div className="flex gap-2">
-                                      <Button
-                                        size="sm"
-                                        onClick={() =>
-                                          handleEditService(service.id)
-                                        }
-                                        disabled={isLoading}
-                                        className="h-8 text-xs gap-1"
-                                      >
-                                        <Check className="h-3 w-3" />
-                                        Save
-                                      </Button>
-                                      <Button
-                                        size="sm"
-                                        variant="outline"
-                                        onClick={() => {
-                                          setEditingServiceId(null);
-                                          setEditingServiceCode("");
-                                          setEditingServiceName("");
-                                        }}
-                                        disabled={isLoading}
-                                        className="h-8 text-xs gap-1"
-                                      >
-                                        <X className="h-3 w-3" />
-                                        Cancel
-                                      </Button>
-                                    </div>
-                                  </div>
-                                ) : (
                                   <div className="flex items-center justify-between rounded bg-muted/50 p-2">
                                     <div className="flex-1 text-sm">
                                       <p className="font-medium">
@@ -800,7 +659,6 @@ export default function ServiceManagement() {
                                       </Button>
                                     </div>
                                   </div>
-                                )}
                               </div>
                             ))}
                           </div>
@@ -905,6 +763,131 @@ export default function ServiceManagement() {
           )}
         </CardContent>
       </Card>
+
+      <Dialog
+        open={editingCategoryIdMode !== null}
+        onOpenChange={(open) => {
+          if (!open && !isLoading) setEditingCategoryIdMode(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Edit Service Category</DialogTitle>
+            <DialogDescription>
+              Update the category code and name.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div className="space-y-2">
+              <Label htmlFor="edit-category-code" className="text-xs">
+                Category Code
+              </Label>
+              <Input
+                id="edit-category-code"
+                value={editingCategoryCode}
+                onChange={(e) => setEditingCategoryCode(e.target.value)}
+                disabled={isLoading}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-category-name" className="text-xs">
+                Category Name
+              </Label>
+              <Input
+                id="edit-category-name"
+                value={editingCategoryName}
+                onChange={(e) => setEditingCategoryName(e.target.value)}
+                disabled={isLoading}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setEditingCategoryIdMode(null)}
+              disabled={isLoading}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() =>
+                editingCategoryIdMode &&
+                handleEditCategory(editingCategoryIdMode)
+              }
+              disabled={isLoading}
+            >
+              Save
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={editingServiceId !== null}
+        onOpenChange={(open) => {
+          if (!open && !isLoading) setEditingServiceId(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Edit Service</DialogTitle>
+            <DialogDescription>
+              Update the service code, name, and standard time.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div className="space-y-2">
+              <Label className="text-xs">Service Code</Label>
+              <Input
+                value={editingServiceCode}
+                onChange={(e) => setEditingServiceCode(e.target.value)}
+                disabled={isLoading}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-xs">Service Name</Label>
+              <Input
+                value={editingServiceName}
+                onChange={(e) => setEditingServiceName(e.target.value)}
+                disabled={isLoading}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-xs">Standard Time (minutes)</Label>
+              <Input
+                type="number"
+                min="0"
+                placeholder="e.g., 30 for 30 minutes"
+                value={editingServiceStandardTime}
+                onChange={(e) => setEditingServiceStandardTime(e.target.value)}
+                disabled={isLoading}
+              />
+              {editingServiceStandardTime && (
+                <p className="text-xs text-muted-foreground">
+                  {formatMinutes(parseInt(editingServiceStandardTime, 10))}
+                </p>
+              )}
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setEditingServiceId(null)}
+              disabled={isLoading}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() =>
+                editingServiceId && handleEditService(editingServiceId)
+              }
+              disabled={isLoading}
+            >
+              Save
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

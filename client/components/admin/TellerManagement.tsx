@@ -17,7 +17,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, Trash2, Plus, Edit2, X, Check } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { AlertCircle, Trash2, Plus, Edit2 } from "lucide-react";
 import { toast } from "sonner";
 import type {
   UserInfo,
@@ -326,91 +334,36 @@ export default function TellerManagement() {
                   key={user.id}
                   className="flex items-center gap-2 rounded-lg border p-3"
                 >
-                  {editingUserId === user.id ? (
-                    <>
-                      <div className="flex-1 space-y-2">
-                        <Input
-                          value={editingUsername}
-                          onChange={(e) => setEditingUsername(e.target.value)}
-                          placeholder="Username"
-                          className="h-8"
-                        />
-                      </div>
-                      <Select
-                        value={editingWindowId?.toString() || "none"}
-                        onValueChange={(value) =>
-                          setEditingWindowId(
-                            value !== "none" ? Number(value) : null,
-                          )
-                        }
-                      >
-                        <SelectTrigger className="w-40 h-8">
-                          <SelectValue placeholder="Select window" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="none">Unassigned</SelectItem>
-                          {getUnassignedWindows(user.id).map((window) => (
-                            <SelectItem
-                              key={window.id}
-                              value={window.id.toString()}
-                            >
-                              {window.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => handleUpdateTeller(user.id)}
-                        className="h-8 w-8 p-0"
-                      >
-                        <Check className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => {
-                          setEditingUserId(null);
-                          setEditingUsername("");
-                        }}
-                        className="h-8 w-8 p-0"
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <div className="flex-1">
-                        <p className="font-medium text-sm">{user.username}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {user.fullName && `${user.fullName} • `}
-                          {user.department && `${user.department} • `}
-                          {getWindowName(user.windowId)}
-                        </p>
-                      </div>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => {
-                          setEditingUserId(user.id);
-                          setEditingWindowId(user.windowId);
-                          setEditingUsername(user.username);
-                        }}
-                        className="h-8 w-8 p-0"
-                      >
-                        <Edit2 className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => handleDeleteTeller(user.id)}
-                        className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </>
-                  )}
+                  <>
+                    <div className="flex-1">
+                      <p className="font-medium text-sm">{user.username}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {user.fullName && `${user.fullName} • `}
+                        {user.department && `${user.department} • `}
+                        {getWindowName(user.windowId)}
+                      </p>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => {
+                        setEditingUserId(user.id);
+                        setEditingWindowId(user.windowId);
+                        setEditingUsername(user.username);
+                      }}
+                      className="h-8 w-8 p-0"
+                    >
+                      <Edit2 className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleDeleteTeller(user.id)}
+                      className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </>
                 </div>
               ))}
             </div>
@@ -539,6 +492,75 @@ export default function TellerManagement() {
           </Button>
         </CardContent>
       </Card>
+
+      <Dialog
+        open={editingUserId !== null}
+        onOpenChange={(open) => {
+          if (!open) {
+            setEditingUserId(null);
+            setEditingUsername("");
+          }
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Edit Teller</DialogTitle>
+            <DialogDescription>
+              Update the username and window assignment.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div className="space-y-2">
+              <Label htmlFor="edit-teller-username">Username</Label>
+              <Input
+                id="edit-teller-username"
+                value={editingUsername}
+                onChange={(e) => setEditingUsername(e.target.value)}
+                placeholder="Username"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-teller-window">Window</Label>
+              <Select
+                value={editingWindowId?.toString() || "none"}
+                onValueChange={(value) =>
+                  setEditingWindowId(value !== "none" ? Number(value) : null)
+                }
+              >
+                <SelectTrigger id="edit-teller-window">
+                  <SelectValue placeholder="Select window" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Unassigned</SelectItem>
+                  {getUnassignedWindows(editingUserId ?? undefined).map(
+                    (window) => (
+                      <SelectItem key={window.id} value={window.id.toString()}>
+                        {window.name}
+                      </SelectItem>
+                    ),
+                  )}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setEditingUserId(null);
+                setEditingUsername("");
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => editingUserId && handleUpdateTeller(editingUserId)}
+            >
+              Save
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
