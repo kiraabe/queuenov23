@@ -79,6 +79,8 @@ export default function EmploymentManagement() {
   );
   const [resetPasswordData, setResetPasswordData] = useState<{
     username: string;
+    fullName: string | null;
+    jobTitle: string | null;
     password: string;
   } | null>(null);
 
@@ -382,6 +384,8 @@ export default function EmploymentManagement() {
       setResetPasswordUserId(userId);
       setResetPasswordData({
         username: user.username,
+        fullName: data.fullName,
+        jobTitle: data.jobTitle,
         password: data.password,
       });
 
@@ -394,13 +398,28 @@ export default function EmploymentManagement() {
     }
   };
 
-  const downloadEmployeePassword = (username: string, password: string) => {
-    const content = `Username: ${username}\nPassword: ${password}`;
+  const downloadEmployeePassword = (
+    username: string,
+    password: string,
+    fullName: string | null,
+    jobTitle: string | null,
+  ) => {
+    const label = [fullName, jobTitle]
+      .map((part) => part?.trim())
+      .filter(Boolean)
+      .join(" - ");
+    const safeLabel = label.replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, " ").trim();
+    const content = [
+      `Name: ${fullName || "-"}`,
+      `Job Title: ${jobTitle || "-"}`,
+      `Username: ${username}`,
+      `Password: ${password}`,
+    ].join("\n");
     const blob = new Blob([content], { type: "text/plain" });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `${username}-credentials.txt`;
+    link.download = `${safeLabel || username}-credentials.txt`;
     document.body.appendChild(link);
     link.click();
     window.URL.revokeObjectURL(url);
@@ -1097,6 +1116,8 @@ export default function EmploymentManagement() {
                       downloadEmployeePassword(
                         resetPasswordData.username,
                         resetPasswordData.password,
+                        resetPasswordData.fullName,
+                        resetPasswordData.jobTitle,
                       );
                     }
                   }}

@@ -952,8 +952,9 @@ export const resetUserPassword: RequestHandler = async (req, res) => {
 
     // Check if user exists
     const userRes = await p.query(
-      `SELECT u.id, u.username, ur.role FROM users u
+      `SELECT u.id, u.username, u.full_name, jt.name_english AS job_title, ur.role FROM users u
        LEFT JOIN user_roles ur ON u.id = ur.user_id
+       LEFT JOIN job_title jt ON jt.id = u.job_title_id
        WHERE u.id = $1
        ORDER BY ur.is_primary DESC NULLS LAST
        LIMIT 1`,
@@ -989,6 +990,8 @@ export const resetUserPassword: RequestHandler = async (req, res) => {
     res.json({
       userId: userId,
       username: user.username,
+      fullName: user.full_name ?? null,
+      jobTitle: user.job_title ?? null,
       password: newPassword,
       message: "User password reset successfully",
     });
