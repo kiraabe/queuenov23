@@ -13,6 +13,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { CheckCircle2, Package, ArrowRight, Pause } from "lucide-react";
 import { apiFetch } from "@/lib/api";
 import { cn } from "@/lib/utils";
+import { PageContainer } from "@/components/layout/PageContainer";
 import { useAuth } from "@/hooks/use-auth";
 import { useTranslation } from "@/hooks/use-translation";
 import { toast } from "sonner";
@@ -933,7 +934,7 @@ export default function Employee() {
   }, [tickets, tab, historyQuery.data]);
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <PageContainer className="py-8 md:py-12">
       <div className="space-y-6">
         <div className="flex items-start justify-between">
           <div className="space-y-2">
@@ -1151,6 +1152,6 @@ export default function Employee() {
         onSuccess={handleCaseCompleted}
         currentUserId={user?.id}
       />
-    </div>
+    </PageContainer>
   );
 }

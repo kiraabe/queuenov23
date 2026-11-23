@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { useTranslation } from "@/hooks/use-translation";
 import { LanguageMenu } from "@/components/language/LanguageMenu";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 const SiteHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,7 +31,7 @@ const SiteHeader = () => {
 
   return (
     <header className="relative sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur">
-      <div className="mx-auto w-full max-w-[1200px] px-5 min-[901px]:px-6 flex items-center justify-between gap-4 sm:gap-6 py-3 sm:py-4">
+      <PageContainer flush className="flex items-center justify-between gap-4 sm:gap-6 py-3 sm:py-4">
         <Link to="/" className="flex items-center gap-2 min-w-0 flex-shrink-0">
           <img
             src="/logos/lhpria-logo.webp"
@@ -129,7 +130,7 @@ const SiteHeader = () => {
             <Menu className="h-5 w-5" />
           )}
         </Button>
-      </div>
+      </PageContainer>
 
       <div
         className={cn(

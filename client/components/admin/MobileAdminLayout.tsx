@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ProfileDropdown } from "./ProfileDropdown";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 interface NavItem {
   id: string;
@@ -31,26 +32,29 @@ export default function MobileAdminLayout({
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-background">
       {/* Mobile/Tablet Header */}
-      <div className="flex h-16 items-center justify-between border-b border-border px-4 bg-background">
-        <div className="flex items-center gap-3">
-          <img
-            src="/logos/lhpria-logo.webp"
-            alt="STC Solution logo"
-            className="h-9 w-9 shrink-0 rounded-full object-cover shadow-sm"
-          />
-          <div>
-            <h1 className="text-lg font-bold tracking-tight">Admin Panel</h1>
-            <p className="text-xs text-muted-foreground">Management System</p>
+      <div className="shrink-0 border-b border-border bg-background">
+        <PageContainer flush className="flex h-16 items-center justify-between">
+          <div className="flex items-center gap-3">
+            <img
+              src="/logos/lhpria-logo.webp"
+              alt="STC Solution logo"
+              className="h-9 w-9 shrink-0 rounded-full object-cover shadow-sm"
+            />
+            <div>
+              <h1 className="text-lg font-bold tracking-tight">Admin Panel</h1>
+              <p className="text-xs text-muted-foreground">Management System</p>
+            </div>
           </div>
-        </div>
-        <ProfileDropdown navItems={navItems} />
+          <ProfileDropdown navItems={navItems} />
+        </PageContainer>
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto md:pb-0" style={{ paddingBottom: 'calc(5rem + env(safe-area-inset-bottom))' }}>
-        <div className="mx-auto w-full px-3 py-3 sm:px-4 sm:py-4 md:px-6 md:py-6 lg:px-8">
-          {children}
-        </div>
+      <main
+        className="flex-1 overflow-y-auto md:pb-0"
+        style={{ paddingBottom: "calc(5rem + env(safe-area-inset-bottom))" }}
+      >
+        <PageContainer className="py-8 md:py-12">{children}</PageContainer>
       </main>
 
       {/* Mobile Bottom Navigation */}
@@ -63,7 +67,7 @@ export default function MobileAdminLayout({
               "flex flex-col items-center justify-center gap-1 flex-1 py-2 transition-all duration-200 active:scale-95",
               activeTab === item.id
                 ? "text-primary"
-                : "text-muted-foreground hover:text-foreground"
+                : "text-muted-foreground hover:text-foreground",
             )}
           >
             <span className="h-6 w-6 transition-transform duration-200">

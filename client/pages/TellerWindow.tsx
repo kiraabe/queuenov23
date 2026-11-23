@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
+import { PageContainer } from "@/components/layout/PageContainer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -781,7 +782,7 @@ export default function TellerWindow() {
     .filter(Boolean) as string[];
 
   return (
-    <div className="container space-y-6 py-6 md:py-8">
+    <PageContainer className="space-y-6 py-8 md:py-12">
       <div>
         <h1 className="mb-2 font-display text-2xl font-semibold">
           {tellerFullName
@@ -1251,6 +1252,6 @@ export default function TellerWindow() {
             ?.name
         }
       />
-    </div>
+    </PageContainer>
   );
 }

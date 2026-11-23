@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { useTranslation } from "@/hooks/use-translation";
+import { PageContainer } from "@/components/layout/PageContainer";
 import styles from "./WorkflowPhases.module.css";
 
 const svg = (d: ReactNode) => (
@@ -57,7 +58,7 @@ export default function WorkflowPhases() {
 
   return (
     <section className={styles.section} aria-labelledby="workflow-phases-title">
-      <div className={styles.inner}>
+      <PageContainer flush>
         <header className={styles.header}>
           <h2 id="workflow-phases-title" className={styles.heading}>{t("home.workflow.title")}</h2>
           <p className={styles.sub}>{t("home.workflow.subtitle")}</p>
@@ -93,7 +94,7 @@ export default function WorkflowPhases() {
             );
           })}
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

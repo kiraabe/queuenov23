@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "@/hooks/use-translation";
+import { PageContainer } from "@/components/layout/PageContainer";
 import styles from "./Hero.module.css";
 
 const queue = [
@@ -16,7 +17,7 @@ export default function Hero() {
     <section className={styles.hero}>
       <div className={styles.glow} aria-hidden="true" />
 
-      <div className={styles.inner}>
+      <PageContainer flush className={styles.inner}>
         <div className={styles.copy}>
           <span className={styles.badge}>
             <span className={styles.dot} />
@@ -105,7 +106,7 @@ export default function Hero() {
             </span>
           </div>
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

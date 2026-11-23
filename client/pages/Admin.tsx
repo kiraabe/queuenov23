@@ -15,6 +15,7 @@ import {
   Workflow,
 } from "lucide-react";
 import MobileAdminLayout from "@/components/admin/MobileAdminLayout";
+import { PageContainer } from "@/components/layout/PageContainer";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import SessionManagement from "@/components/admin/SessionManagement";
 import TicketManagement from "@/components/admin/TicketManagement";
@@ -190,7 +191,7 @@ export default function Admin({ section }: AdminProps) {
   return (
     <TooltipProvider>
       <div className="flex flex-col min-h-screen">
-        <div className="flex-1 container mx-auto px-4 py-6 pb-12">
+        <PageContainer className="flex-1 py-8 md:py-12">
           <div className="space-y-6">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-start gap-3">
@@ -234,7 +235,7 @@ export default function Admin({ section }: AdminProps) {
 
             <div className="mt-8 space-y-4">{renderContent()}</div>
           </div>
-        </div>
+        </PageContainer>
         <AdminFooter />
       </div>
     </TooltipProvider>

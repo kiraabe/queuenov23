@@ -538,8 +538,9 @@ export default function Reception() {
     <ConsoleShell
       title={t("reception.title")}
       className="lg:grid-cols-1"
+      sharedLayout
     >
-      <section className="w-full grid gap-6 py-4 md:py-6">
+      <section className="grid gap-6">
         <Card className="w-full rounded-xl border-border/70 bg-white shadow-sm">
           <CardHeader className="space-y-1 mb-4">
             <CardTitle className="flex items-center gap-2 text-lg">
@@ -738,7 +739,7 @@ export default function Reception() {
         </Card>
       </section>
 
-      <section className="w-full border-t border-border bg-muted py-8 md:py-12 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+      <section className="mt-8 border-t border-border pt-8 md:mt-12 md:pt-12">
         <div className="grid gap-4 md:gap-6 lg:grid-cols-3">
           {RECEPTION_GAINS.map((item) => (
             <Card key={item.titleKey}>

@@ -1,13 +1,8 @@
 .section {
+  padding-block: var(--stc-section-y);
   background: linear-gradient(180deg, #f6f9ff 0%, #eef4ff 100%);
   font-family: inherit;
   color: #1b2a4a;
-}
-
-.inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 80px 24px;
 }
 
 .header {
@@ -17,7 +12,7 @@
 
 .heading {
   margin: 0;
-  font-size: clamp(1.875rem, 3.4vw, 2.5rem);
+  font-size: 2.5rem;
   line-height: 1.1;
   letter-spacing: -0.03em;
   font-weight: 800;
@@ -93,8 +88,8 @@
   .grid {
     grid-template-columns: 1fr;
   }
-  .inner {
-    padding: 56px 20px;
+  .heading {
+    font-size: 1.875rem;
   }
   .text {
     max-width: none;

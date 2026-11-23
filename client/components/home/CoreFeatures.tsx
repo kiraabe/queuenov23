@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import styles from "./CoreFeatures.module.css";
 
 import { useTranslation } from "@/hooks/use-translation";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 type Feature = { id: "reception" | "virtualWaiting" | "liveDelivery"; icon: ReactNode };
 
@@ -47,7 +48,7 @@ export default function CoreFeatures() {
 
   return (
     <section className={styles.section} aria-labelledby="core-features-title">
-      <div className={styles.inner}>
+      <PageContainer flush>
         <header className={styles.header}>
           <h2 id="core-features-title" className={styles.heading}>{t("home.features.title")}</h2>
           <p className={styles.sub}>{t("home.features.subtitle")}</p>
@@ -62,7 +63,7 @@ export default function CoreFeatures() {
             </article>
           ))}
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

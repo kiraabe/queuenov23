@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "@/hooks/use-translation";
 import { APP_VERSION } from "@/lib/app-version";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 const SiteFooter = () => {
   const { t } = useTranslation();
@@ -8,7 +9,7 @@ const SiteFooter = () => {
   return (
     <footer className="relative overflow-hidden border-t border-border/60 bg-background/60">
       <div className="py-5">
-        <div className="mx-auto w-full max-w-[1200px] px-5 min-[901px]:px-6 flex flex-col gap-3 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
+        <PageContainer flush className="flex flex-col gap-3 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <span>
               {t("common.copyright", { year: new Date().getFullYear() })}
@@ -35,7 +36,7 @@ const SiteFooter = () => {
               {t("common.liveStatus")}
             </a>
           </div>
-        </div>
+        </PageContainer>
       </div>
     </footer>
   );
